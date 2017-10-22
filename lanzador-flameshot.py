@@ -225,7 +225,7 @@ class LanzadorFrame(wx.Frame):
         argumentos = list()
         argumentos.append("/usr/local/bin/flameshot")
         argumentos.append("-d " + str(self.spinCtrlSegundos.GetValue() * 1000))
-        argumentos.append("-p " + str(self.textCtrlRutaGuardado.GetValue()))
+        argumentos.append("-p " + self.textCtrlRutaGuardado.GetValue().encode("utf8"))
  
         if self.comboboxArea.GetSelection():  # Se le toma como bool al tener sólo 2 posibilidades
             argumentos.insert(1, "gui")
