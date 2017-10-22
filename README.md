@@ -14,7 +14,7 @@ sudo apt install python-wxgtk3.0
 ```
 sudo apt install git
 ```
-[Tener instalado Flameshot]https://github.com/lupoDharkael/flameshot/ (no es imprescindible pero sí recomendable ;)
+[Tener instalado Flameshot](https://github.com/lupoDharkael/flameshot/) (no es imprescindible pero sí recomendable ;)
 
 ### Instalación:
 ```
