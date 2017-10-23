@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
  
 ##################################################################################
-#             Script de instalación lanzador-flameshot.py v 0.2                  #
+#            Script de instalación lanzador-flameshot.py v 0.2.1                 #
 ##################################################################################
 #                                                                                #
 # Ejemplo de utilización 1:                                                      #
@@ -22,8 +22,8 @@ import os
 import shutil
 import sys
 from ConfigParser import ConfigParser
- 
-version = "v.0.2"
+
+version = "v.0.2.1"
 titulo = "Instalación Lanzador de Flameshot"
  
 print ("".ljust(60, "="))
@@ -179,7 +179,7 @@ if __name__ == "__main__":
  
     else:
  
-        if not os.path.exists("/usr/local/bin/flameshot"):
+        if not os.path.exists("/usr/local/bin/flameshot") and not os.path.exists("/usr/bin/flameshot"):
             err = True
             while err:
                 res = checkPreguntaSiNo("- Parece que Flameshot no está instalado.\n¿Desea continuar? [s] / n :")
