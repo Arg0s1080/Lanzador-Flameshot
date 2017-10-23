@@ -2,7 +2,7 @@
 # -*- coding: UTF-8 -*-
  
 ########################################################################
-#                      Lanzador Flameshot v.0.2                        #
+#                     Lanzador Flameshot v.0.2.1                       #
 ########################################################################
 #                                                                      #
 # Si se ha utilizado el instalador, la aplicación debería aparecer en  #
@@ -21,6 +21,17 @@ from ConfigParser import ConfigParser
  
 # Variables
 rutaArchivoConfig = os.getenv("HOME") + "/.config/lanzador-flameshot/Lanzador.cfg"
+
+if os.path.exists("/usr/local/bin/flameshot"):
+    rutaFlameshot = "/usr/local/bin/flameshot"
+elif os.path.exists("/usr/bin/flameshot"):
+    rutaFlameshot = "/usr/bin/flameshot"
+
+if os.path.exists("/usr/local/share/icons/flameshot.png"):
+    rutaIcono = "/usr/local/share/icons/flameshot.png"
+elif os.path.exists("/usr/share/icons/flameshot.png"):
+    rutaIcono = "/usr/share/icons/flameshot.png"
+
 # Clases
 config = ConfigParser()
  
@@ -62,7 +73,7 @@ class LanzadorFrame(wx.Frame):
         self.SetTitle(_("Flameshot"))
         _icon = wx.NullIcon
         #  icon.CopyFromBitmap(wx.Bitmap(os.getenv("HOME") + "/.local/share/icons/flameshot.png", wx.BITMAP_TYPE_ANY))
-        _icon.CopyFromBitmap(wx.Bitmap("/usr/local/share/icons/flameshot.png", wx.BITMAP_TYPE_ANY))
+        _icon.CopyFromBitmap(wx.Bitmap(rutaIcono, wx.BITMAP_TYPE_ANY))
         self.SetIcon(_icon)
         self.SetSize((251, 245))
         self.labelModoCapura.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD, 0, ""))
@@ -114,8 +125,8 @@ class LanzadorFrame(wx.Frame):
         self.Layout()
  
     def OnClose(self, event):
- 
-        with open(rutaArchivoConfig, "w") as archivoConfig:
+
+        with open(rutaArchivoConfig.encode('utf8', 'replace'), "w") as archivoConfig:
             config.write(archivoConfig)
         self.Destroy()
  
@@ -186,7 +197,7 @@ class LanzadorFrame(wx.Frame):
  
     def OnButtonPreferenciasClick(self, event):
  
-        os.system("/usr/local/bin/flameshot config")
+        os.system(rutaFlameshot + " config")
         event.Skip()
  
     def OnButtonSalirClick(self, event):
@@ -223,7 +234,7 @@ class LanzadorFrame(wx.Frame):
     def setArgumentos(self):
  
         argumentos = list()
-        argumentos.append("/usr/local/bin/flameshot")
+        argumentos.append(rutaFlameshot)
         argumentos.append("-d " + str(self.spinCtrlSegundos.GetValue() * 1000))
         argumentos.append("-p " + self.textCtrlRutaGuardado.GetValue().encode("utf8"))
  
@@ -236,7 +247,7 @@ class LanzadorFrame(wx.Frame):
  
     def checkFlameshot(self):
  
-        if not os.path.exists("/usr/local/bin/flameshot"):
+        if not os.path.exists("/usr/local/bin/flameshot") and not os.path.exists("/usr/bin/flameshot"):
             return self.msgDlg("Parece que Flameshot no está instalado.\n\n¿Desea continuar?".decode("utf8"),
                                wx.YES_NO, wx.ICON_QUESTION)
  
